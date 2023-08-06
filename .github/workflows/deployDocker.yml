@@ -3,7 +3,7 @@ name: CI/CD pipeline
 on:
   push:
     branches:
-      - Majed-Amjad
+      - main
 
 jobs:
   container-deploy:
