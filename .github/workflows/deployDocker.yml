@@ -21,15 +21,15 @@ jobs:
         env:
           GCR_TOKEN: ${{ secrets.MA_GCLOUD_TOKEN }}
 
-      # - name: Build and Push Backend Docker image
-      #   run: |
-      #     docker build -t gcr.io/${{ secrets.MA_GCLOUD_PROJECT }}/majedamjadregistry:backend-latest backend/
-      #     docker push gcr.io/${{ secrets.MA_GCLOUD_PROJECT }}/majedamjadregistry:backend-latest
-
-      - name: Build and Push Frontend Docker image
+      - name: Build and Push Backend Docker image
         run: |
-          docker build -t gcr.io/${{ secrets.MA_GCLOUD_PROJECT }}/majedamjadregistry:frontend-latest frontend/
-          docker push gcr.io/${{ secrets.MA_GCLOUD_PROJECT }}/majedamjadregistry:frontend-latest
+          docker build -t gcr.io/${{ secrets.MA_GCLOUD_PROJECT }}/majedamjadregistry:backend-latest backend/
+          docker push gcr.io/${{ secrets.MA_GCLOUD_PROJECT }}/majedamjadregistry:backend-latest
+
+      # - name: Build and Push Frontend Docker image
+      #   run: |
+      #     docker build -t gcr.io/${{ secrets.MA_GCLOUD_PROJECT }}/majedamjadregistry:frontend-latest frontend/
+      #     docker push gcr.io/${{ secrets.MA_GCLOUD_PROJECT }}/majedamjadregistry:frontend-latest
 
       - name: Authenticate to Google Cloud
         run: echo '${{ secrets.MA_GCLOUD_TOKEN }}' > admin.json && gcloud auth activate-service-account --key-file=./admin.json
@@ -37,14 +37,14 @@ jobs:
         run: |
           gcloud container clusters get-credentials majed-amjad-cluster --zone us-central1-a --project nifty-catfish-395105
 
-      # - name: Deploy Backend Cloud Run
-      #   run: |
-      #     gcloud run deploy backend --image gcr.io/${{ secrets.MA_GCLOUD_PROJECT }}/majedamjadregistry:backend-latest --platform managed --region us-central1 --allow-unauthenticated
-      #     env:
-      #       GCLOUD_RUN_AUTHENTICATION: ${{ secrets.MA_GCLOUD_TOKEN }}
-
-      - name: Deploy Frontend Cloud Run
+      - name: Deploy Backend Cloud Run
         run: |
-          gcloud run deploy frontend --image gcr.io/${{ secrets.MA_GCLOUD_PROJECT }}/majedamjadregistry:frontend-latest --platform managed --region us-central1 --allow-unauthenticated
+          gcloud run deploy backend --image gcr.io/${{ secrets.MA_GCLOUD_PROJECT }}/majedamjadregistry:backend-latest --platform managed --region us-central1 --allow-unauthenticated
           env:
             GCLOUD_RUN_AUTHENTICATION: ${{ secrets.MA_GCLOUD_TOKEN }}
+
+      # - name: Deploy Frontend Cloud Run
+      #   run: |
+      #     gcloud run deploy frontend --image gcr.io/${{ secrets.MA_GCLOUD_PROJECT }}/majedamjadregistry:frontend-latest --platform managed --region us-central1 --allow-unauthenticated
+      #     env:
+      #       GCLOUD_RUN_AUTHENTICATION: ${{ secrets.MA_GCLOUD_TOKEN }}
