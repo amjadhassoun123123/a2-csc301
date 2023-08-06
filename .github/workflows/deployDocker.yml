@@ -33,4 +33,4 @@
   
         - name: Deploy Backend Cloud Run
           run: |
-            gcloud run deploy backend --image northamerica-northeast1-docker.pkg.dev/nifty-catfish-395105/majed-amjad/backend:latest --platform managed --region us-central1 --allow-unauthenticated
+            gcloud run deploy backend --image northamerica-northeast1-docker.pkg.dev/nifty-catfish-395105/majed-amjad/backend:latest --platform managed --region us-central1 --allow-unauthenticated --project nifty-catfish-395105
