@@ -16,6 +16,12 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: Authenticate to Google Cloud
+        run: echo '${{ secrets.MA_GCLOUD_TOKEN }}' > admin.json && gcloud auth activate-service-account --key-file=./admin.json
+      
+      - name: Configure kubectl
+        run: |
+          gcloud container clusters get-credentials majed-amjad-cluster --zone us-central1-a --project nifty-catfish-395105
       - name: Login to Artifact Registry
         run: echo $GCR_TOKEN | docker login -u _json_key --password-stdin https://northamerica-northeast1-docker.pkg.dev
         env:
