@@ -8,6 +8,6 @@ WORKDIR /app/frontend
 RUN npm i -f
 RUN npm install --force && npm run build 
 
-EXPOSE 3001
+EXPOSE 8080
 
 CMD [ "npm", "run", "start:frontend" ]
